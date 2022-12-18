@@ -9,7 +9,7 @@
  */
 
 import { PhotonImage, resize } from "./photon_rs_bg";
-import loadPhotonWasm from "./loadPhotonWasm";
+import loadPhotonWasm from "./photon/loadPhotonWasm";
 
 loadPhotonWasm();
 

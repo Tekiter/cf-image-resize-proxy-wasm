@@ -1,16 +1,17 @@
-// OLD
+// Generated from [photon](https://github.com/silvia-odwyer/photon)
+//   by using [wasm-pack build](https://rustwasm.github.io/docs/wasm-pack/commands/build.html)
 
-// import * as wasm from './photon_rs_bg.wasm';
-
-// NEW
-
+// Original
+/*
+import * as wasm from './photon_rs_bg.wasm';
+*/
+// Modified (Inspired by https://github.com/skymethod/denoflare/blob/master/examples/image-demo-worker/ext/photon_rs_bg.js)
 let wasm;
 
-export function setWasm(wasm_) {
-  wasm = wasm_;
+export function setWasm(wasmInstance) {
+  wasm = wasmInstance;
 }
-
-//
+////
 
 const heap = new Array(32).fill(undefined);
 
