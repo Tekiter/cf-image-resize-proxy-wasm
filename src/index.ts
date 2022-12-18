@@ -32,13 +32,12 @@ export default {
 
       const decodedTarget = decodeURIComponent(target);
       const receivedBuffer = await fetchBytes(decodedTarget);
-      const resizedImageBytes = resizeImage(receivedBuffer, targetWidth);
-
-      return new Response(resizedImageBytes, {
+      const { imageBytes, mime } = resizeImage(receivedBuffer, targetWidth);
+      return new Response(imageBytes, {
         headers: new Headers({
           "Accept-Ranges": "bytes",
-          "Content-Type": "image/png",
-          "Content-Length": `${resizedImageBytes.length}`,
+          "Content-Type": mime,
+          "Content-Length": `${imageBytes.length}`,
         }),
       });
     } catch (err) {
@@ -65,8 +64,11 @@ function resizeImage(imageBuffer: ArrayBuffer, newWidth: number) {
   const img = PhotonImage.new_from_byteslice(new Uint8Array(imageBuffer));
   const newHeight = Math.round(img.get_height() * (newWidth / img.get_width()));
   const converted = resize(img, newWidth, newHeight, 1);
-  const base64Img = converted.get_base64().split(",")[1];
+
+  const base64 = converted.get_base64();
+  const mime = base64.split(";")[0].replace("data:", "");
+  const base64Img = base64.split(",")[1];
   const imageBytes = b64ToArrayBuffer(base64Img);
 
-  return imageBytes;
+  return { imageBytes, mime };
 }
