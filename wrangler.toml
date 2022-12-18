@@ -1,0 +1,7 @@
+name = "image-resize-proxy"
+main = "src/index.ts"
+compatibility_date = "2022-11-22"
+
+[[rules]]
+type = "CompiledWasm"
+globs = [ "**/*.wasm" ]
